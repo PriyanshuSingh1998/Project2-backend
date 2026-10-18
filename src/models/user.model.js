@@ -35,7 +35,7 @@ const userSchema = new Schema (
         },
         watchHistory: [
             {
-                types: Schema.Types.ObjectId,
+                type: Schema.Types.ObjectId,
                 ref:"Video"
             }
         ],
@@ -56,7 +56,7 @@ const userSchema = new Schema (
 userSchema.pre("save", async function (next){
     if(!this.isModified("password")) return next(); // agar password modified hi nhi ho rha name change, ya avatar change ho rhe hai to bar bar password ko chnage mat kro
 
-    this.password= bcrypt.hash(this.password, 10)
+    this.password= await bcrypt.hash(this.password, 10)
     next()
 })
 // Password Check
